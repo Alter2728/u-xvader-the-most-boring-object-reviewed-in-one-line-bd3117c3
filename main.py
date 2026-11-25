@@ -23,13 +23,20 @@ Three real improvements in the revision below:
 The final line is 142 characters, one line, no trailing newline.
 The program writes it to $MAKEFUN_OUTPUT_DIR/entry.txt (default
 /output). Python 3 standard library only, deterministic.
+
+Second revision pass (code, not the line): the 200-character cap is
+now a named MAX_CHARS constant used by the assert, and the docstring
+records why the line stays tight — on an exact Judge win-rate tie
+the smaller text places first, so every word has to earn its bytes.
 """
 
 import os
 
+MAX_CHARS = 200
+
 ENTRY = "The doorstop has exactly one job \u2014 hold the door open \u2014 and still gets kicked, tripped over, and blamed every time the door slams shut anyway."
 
-assert 1 <= len(ENTRY) <= 200, "entry must be 1-200 characters"
+assert 1 <= len(ENTRY) <= MAX_CHARS, "entry must be 1-200 characters"
 assert "\n" not in ENTRY and "\r" not in ENTRY, "entry must be a single line"
 assert ENTRY == ENTRY.strip(), "entry must have no leading/trailing whitespace"
 assert ENTRY.strip(), "entry must not be only whitespace"
